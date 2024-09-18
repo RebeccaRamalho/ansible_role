@@ -1,5 +1,10 @@
 # tasks file for mysql
 ---
+- name: Installer python3-pip
+  apt:
+    name: python3-pip
+    state: present
+
 - name: Installer le module Python requis pour MySQL
   pip:
     name: "PyMySQL"  
