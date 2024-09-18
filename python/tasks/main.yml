@@ -5,6 +5,24 @@
   apt:
     update_cache: yes
 
+- name: Installer python3-venv
+  apt:
+    name: python3-venv
+    state: present
+
+- name: Créer un environnement virtuel
+  command: python3 -m venv /opt/venv
+  args:
+    creates: /opt/venv
+
+- name: Installer pip dans l'environnement virtuel
+  command: /opt/venv/bin/pip install PyMySQL
+  args:
+    creates: /opt/venv/lib/python3.*/site-packages/PyMySQL
+- name: Mettre à jour les paquets
+  apt:
+    update_cache: yes
+
 - name: Installer les dépendances pour Python
   apt:
     name:
