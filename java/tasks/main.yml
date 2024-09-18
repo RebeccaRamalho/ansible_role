@@ -1,0 +1,21 @@
+---
+# tasks file for java
+
+---
+- name: Mettre à jour les paquets
+  apt:
+    update_cache: yes
+
+- name: Installer Java
+  apt:
+  name: {{ java_packages.Ubuntu }}
+    state: present
+
+- name: Vérifier l'installation de Java
+  command: java -version
+  register: java_version
+
+- name: Afficher la version de Java
+  debug:
+    var: java_version.stdout
+

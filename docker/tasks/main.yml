@@ -1,0 +1,42 @@
+---
+# tasks file for docker
+---
+- name: Mettre à jour les paquets
+  apt:
+    update_cache: yes
+
+- name: Installer les dépendances nécessaires
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+    state: present
+
+- name: Ajouter la clé GPG de Docker
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Ajouter le dépôt Docker
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    state: present
+
+- name: Installer Docker
+  apt:
+    name: docker-ce
+    state: present
+
+- name: Démarrer le service Docker
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Ajouter l'utilisateur au groupe Docker
+  user:
+    name: "{{ ansible_user }}"
+    group: docker
+    append: yes

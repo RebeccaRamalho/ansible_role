@@ -1,0 +1,5 @@
+---
+# vars file for java
+java_packages: 
+  Ubuntu: openjdk-11-jdk 
+

@@ -1,0 +1,19 @@
+---
+# tasks file for maven
+---
+- name: Mettre à jour les paquets
+  apt:
+    update_cache: yes
+
+- name: Installer Maven
+  apt:
+    name: maven
+    state: present
+
+- name: Vérifier l'installation de Maven
+  command: mvn -version
+  register: maven_version
+
+- name: Afficher la version de Maven
+  debug:
+    var: maven_version.stdout

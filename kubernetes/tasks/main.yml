@@ -1,0 +1,45 @@
+---
+# tasks file for kubernetes
+---
+- name: Mettre à jour les paquets
+  apt:
+    update_cache: yes
+
+- name: Installer les dépendances nécessaires
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+    state: present
+
+- name: Ajouter la clé GPG de Kubernetes
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+
+- name: Ajouter le dépôt Kubernetes
+  apt_repository:
+    repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+    state: present
+
+- name: Installer kubelet, kubeadm et kubectl
+  apt:
+    name:
+      - kubelet
+      - kubeadm
+      - kubectl
+    state: present
+    update_cache: yes
+
+- name: Marquer kubelet pour ne pas être mis à jour
+  apt_mark:
+    name: kubelet
+    state: held
+
+- name: Démarrer le service kubelet
+  service:
+    name: kubelet
+    state: started
+    enabled: yes

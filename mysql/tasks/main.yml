@@ -1,0 +1,31 @@
+---
+# tasks file for mysql
+
+---
+- name: Mettre à jour les paquets
+  apt:
+    update_cache: yes
+
+- name: Installer MySQL
+  apt:
+    name: mysql-server
+    state: present
+
+- name: Démarrer le service MySQL
+  service:
+    name: mysql
+    state: started
+    enabled: yes
+
+- name: Sécuriser l'installation de MySQL
+  mysql_secure_installation:
+    login_password: ''
+    root_password: 'rebecca'
+    remove_anonymous_users: yes
+    disallow_root_login_remotely: yes
+    remove_test_database: yes
+    create_database: yes
+    database_name: 'test'
+    create_user: yes
+    user_name: 'rebecca'
+    user_password: 'rebecca'
