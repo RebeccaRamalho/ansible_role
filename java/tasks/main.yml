@@ -1,6 +1,4 @@
----
 # tasks file for java
-
 ---
 - name: Mettre à jour les paquets
   apt:
@@ -8,7 +6,7 @@
 
 - name: Installer Java
   apt:
-  name: {{ java_packages.Ubuntu }}
+    name: "{{ java_packages.Ubuntu }}"
     state: present
 
 - name: Vérifier l'installation de Java

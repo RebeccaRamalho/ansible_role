@@ -1,4 +1,3 @@
----
 # tasks file for kubernetes
 ---
 - name: Mettre à jour les paquets
@@ -34,7 +33,7 @@
     update_cache: yes
 
 - name: Marquer kubelet pour ne pas être mis à jour
-  apt_mark:
+  apt:
     name: kubelet
     state: held
 
