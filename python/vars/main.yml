@@ -1,4 +1,4 @@
 ---
 # vars file for python
 python:
-  version2: "Python-2.7.18"
+  version2: "Python3"
