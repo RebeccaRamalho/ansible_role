@@ -1,5 +1,10 @@
 # tasks file for mysql
 ---
+- name: Installer le module Python requis pour MySQL
+  pip:
+    name: "PyMySQL"  
+    state: present
+
 - name: Installer MySQL
   apt:
     name: mysql-server
