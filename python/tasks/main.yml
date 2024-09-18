@@ -1,0 +1,54 @@
+---
+# tasks file for python_install
+
+- name: Mettre à jour les paquets
+  apt:
+    update_cache: yes
+
+- name: Installer les dépendances pour Python
+  apt:
+    name:
+      - build-essential
+      - libssl-dev
+      - libbz2-dev
+      - libreadline-dev
+      - libsqlite3-dev
+      - wget
+      - curl
+      - llvm
+      - libncurses5-dev
+      - libncursesw5-dev
+      - xz-utils
+      - tk-dev
+      - libffi-dev
+      - liblzma-dev
+      - python-openssl
+    state: present
+
+- name: Télécharger Python
+  get_url:
+    url: "https://www.python.org/ftp/python/{{ python_version }}/Python-{{ python_version }}.tgz"
+    dest: "/tmp/Python-{{ python.version2 }}.tgz"
+
+- name: Extraire les fichiers de Python
+  unarchive:
+    src: "/tmp/Python-{{ python.version2 }}.tgz"
+    dest: "/tmp/"
+    remote_src: yes
+
+- name: Installer Python
+  command: >
+    ./configure --enable-optimizations && make altinstall
+  args:
+    chdir: "/tmp/Python-{{ python.version2 }}"
+  when: ansible_os_family == "Debian"
+
+- name: Supprimer les fichiers temporaires
+  file:
+    path: "/tmp/Python-{{ python.version2 }}.tgz"
+    state: absent
+
+- name: Supprimer le répertoire temporaire
+  file:
+    path: "/tmp/Python-{{ python.version2 }}"
+    state: absent
